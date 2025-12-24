@@ -1,0 +1,28 @@
+# Environment variables
+.env
+.env.*
+.env.development
+.env.production
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+dockerenv/
+venv/
+
+# Logs
+*.log
+logfire/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Database / runtime
+*.db
+postgres-data/
