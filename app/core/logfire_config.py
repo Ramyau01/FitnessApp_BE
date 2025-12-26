@@ -11,13 +11,17 @@ def init_logfire(sync_engine):
     """
     enable = os.getenv("ENABLE_LOGFIRE", "false").lower() == "true"
     environment = os.getenv("ENVIRONMENT", "production").lower()
+
  
     if enable and environment == "development":
-        configure(service_name="fitness-app", environment=environment)
+        token = os.getenv("LOGFIRE_TOKEN")
+        base_url = os.getenv("LOGFIRE_BASE_URL", "https://logfire-us.pydantic.dev")
+        configure(service_name="fitness-app", environment=environment, token=token, base_url=base_url)
         instrument_sqlalchemy(sync_engine)
             # Standard Python logging for production or if Logfire disabled
         
-    else:    
+    else:  
+       
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s [%(levelname)s] %(message)s"

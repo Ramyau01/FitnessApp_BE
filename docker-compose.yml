@@ -9,9 +9,9 @@ services:
     image: postgres:18.0-alpine3.22
     restart: always
     env_file:
-      - ./.env
-    ports:
-      - "5433:5432"
+      - ./.env.${ENVIRONMENT}
+    # ports:
+    #   - "5433:5432"
     networks:
       - dev-network
     volumes:
@@ -22,19 +22,19 @@ services:
       timeout: 5s
       retries: 5
 
-  dev-test:
-    image: postgres:18.0-alpine3.22
-    restart: always
-    env_file:
-      - ./.env
-    ports:
-      - "5434:5432"
-    networks:
-      - dev-network
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Test1234!
-      POSTGRES_DB: FitnessAppTestDB
+  # dev-test:
+  #   image: postgres:18.0-alpine3.22
+  #   restart: always
+  #   env_file:
+  #     - ./.env
+  #   ports:
+  #     - "5434:5432"
+  #   networks:
+  #     - dev-network
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: Test1234!
+  #     POSTGRES_DB: FitnessAppTestDB
 
   adminer:
     image: adminer
@@ -50,8 +50,8 @@ services:
       - "8000:8000"
     networks:
       - dev-network
-    environment:
-      DATABASE_URL: postgresql://postgres:Test1234!@dev-db:5432/FitnessAppDB
+    env_file:
+      - ./.env.${ENVIRONMENT}
     depends_on:
       dev-db:
         condition: service_healthy
